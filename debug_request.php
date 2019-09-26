@@ -19,9 +19,18 @@ if (!(isset($_GET['blackfire-debug-secret']) && SECRET === $_GET['blackfire-debu
     die('KO');
 }
 
+ob_start();
+if (\extension_loaded('blackfire')) {
+   var_dump(\BlackfireProbe::getMainInstance());
+}
+phpinfo();
+$info = strip_tags(ob_get_contents());
+ob_end_clean();
+
 $varsToDump = $_SERVER + [
         'BLACKFIRE_SERVER_ID' => getenv('BLACKFIRE_SERVER_ID'),
         'BLACKFIRE_SERVER_TOKEN' => getenv('BLACKFIRE_SERVER_TOKEN'),
+        'PHP_INFO' => $info,
     ];
 error_log(date('Y-m-d h:i:s - ').print_r($varsToDump, true), 3, $logFile);
 
