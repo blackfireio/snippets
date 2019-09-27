@@ -23,7 +23,6 @@ ob_start();
 if (\extension_loaded('blackfire')) {
    var_dump(\BlackfireProbe::getMainInstance());
 }
-phpinfo();
 $info = strip_tags(ob_get_contents());
 ob_end_clean();
 
